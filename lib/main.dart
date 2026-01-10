@@ -29,6 +29,15 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   @override
+  List<Icon> scoreKeeper = [
+    Icon(
+      Icons.check,
+      color: Colors.green,
+      fontWeight: FontWeight.bold,
+      size: 30,
+    ),
+    Icon(Icons.close, color: Colors.red, fontWeight: FontWeight.bold, size: 30),
+  ];
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -59,7 +68,18 @@ class _QuizPageState extends State<QuizPage> {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+                setState(() {
+                  scoreKeeper.add(
+                    Icon(
+                      Icons.check,
+                      color: Colors.green,
+                      fontWeight: FontWeight.bold,
+                      size: 30,
+                    ),
+                  );
+                });
+              },
               child: Text('True'),
             ),
           ),
@@ -87,24 +107,11 @@ class _QuizPageState extends State<QuizPage> {
           flex: 1,
           child: Padding(
             padding: const EdgeInsets.all(15.0),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.check,
-                  color: Colors.green,
-                  fontWeight: FontWeight.bold,
-                  size: 30,
-                ),
-                Icon(
-                  Icons.close,
-                  color: Colors.red,
-                  fontWeight: FontWeight.bold,
-                  size: 30,
-                ),
-              ],
-            ),
+            child: Row(children: scoreKeeper),
           ),
         ),
+
+        // TODO: Create a new display to show users answers
       ],
     );
   }
