@@ -29,15 +29,16 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   @override
-  List<Icon> scoreKeeper = [
-    Icon(
-      Icons.check,
-      color: Colors.green,
-      fontWeight: FontWeight.bold,
-      size: 30,
-    ),
-    Icon(Icons.close, color: Colors.red, fontWeight: FontWeight.bold, size: 30),
+  List<Icon> scoreKeeper = [];
+
+  List<String> questions = [
+    'You can lead a cow down stairs but not up stairs',
+    'Approximately one quarter of human bones are in the fee',
+    'A slug\'s blood is green',
   ];
+
+  int questionNumber = 0;
+
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -48,7 +49,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: const EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                'This is where the questions will appear.',
+                questions[questionNumber],
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.white, fontSize: 25),
               ),
@@ -70,14 +71,7 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 setState(() {
-                  scoreKeeper.add(
-                    Icon(
-                      Icons.check,
-                      color: Colors.green,
-                      fontWeight: FontWeight.bold,
-                      size: 30,
-                    ),
-                  );
+                  questionNumber++;
                 });
               },
               child: Text('True'),
@@ -97,7 +91,11 @@ class _QuizPageState extends State<QuizPage> {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+                setState(() {
+                  questionNumber++;
+                });
+              },
               child: Text('False'),
             ),
           ),
