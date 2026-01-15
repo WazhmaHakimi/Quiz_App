@@ -37,6 +37,8 @@ class _QuizPageState extends State<QuizPage> {
     'A slug\'s blood is green',
   ];
 
+  List<bool> answers = [false, true, true];
+
   int questionNumber = 0;
 
   Widget build(BuildContext context) {
@@ -70,6 +72,13 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
+                bool correctAnswer = answers[questionNumber];
+
+                if (correctAnswer) {
+                  print('User was correct');
+                } else {
+                  print('User was wrong');
+                }
                 setState(() {
                   questionNumber++;
                 });
@@ -92,6 +101,14 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
+                bool correctAnswer = answers[questionNumber];
+
+                if (!correctAnswer) {
+                  print('User was correct');
+                } else {
+                  print('User was wrong');
+                }
+
                 setState(() {
                   questionNumber++;
                 });
