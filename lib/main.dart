@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app/question.dart';
 
 void main() {
   runApp(Quiz());
@@ -31,13 +32,17 @@ class _QuizPageState extends State<QuizPage> {
   @override
   List<Icon> scoreKeeper = [];
 
-  List<String> questions = [
-    'You can lead a cow down stairs but not up stairs',
-    'Approximately one quarter of human bones are in the fee',
-    'A slug\'s blood is green',
+  List<Question> questionsList = [
+    Question(
+      questionText: 'You can lead a cow down stairs but not up stairs',
+      answers: false,
+    ),
+    Question(
+      questionText: 'Approximately one quarter of human bones are in the fee',
+      answers: true,
+    ),
+    Question(questionText: 'A slug\'s blood is green', answers: true),
   ];
-
-  List<bool> answers = [false, true, true];
 
   int questionNumber = 0;
 
@@ -51,7 +56,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: const EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                questions[questionNumber],
+                questionsList[questionNumber].questionText,
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.white, fontSize: 25),
               ),
@@ -72,7 +77,7 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                bool correctAnswer = answers[questionNumber];
+                bool correctAnswer = questionsList[questionNumber].answers;
 
                 if (correctAnswer) {
                   print('User was correct');
@@ -101,7 +106,7 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                bool correctAnswer = answers[questionNumber];
+                bool correctAnswer = questionsList[questionNumber].answers;
 
                 if (!correctAnswer) {
                   print('User was correct');
