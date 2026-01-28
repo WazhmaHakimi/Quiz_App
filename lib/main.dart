@@ -34,8 +34,6 @@ class _QuizPageState extends State<QuizPage> {
   @override
   List<Icon> scoreKeeper = [];
 
-  int questionNumber = 0;
-
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -46,7 +44,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: const EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                quizBrain.questionsList[questionNumber].questionText,
+                quizBrain.getQuestionText(),
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.white, fontSize: 25),
               ),
@@ -67,9 +65,7 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                // quizBrain.questionsList[questionNumber].answer = true;
-                bool correctAnswer =
-                    quizBrain.questionsList[questionNumber].answer;
+                bool correctAnswer = quizBrain.getCorrectAnswer();
 
                 if (correctAnswer) {
                   print('User was correct');
@@ -77,7 +73,7 @@ class _QuizPageState extends State<QuizPage> {
                   print('User was wrong');
                 }
                 setState(() {
-                  questionNumber++;
+                  quizBrain.nextQuestion();
                 });
               },
               child: Text('True'),
@@ -98,8 +94,7 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                bool correctAnswer =
-                    quizBrain.questionsList[questionNumber].answer;
+                bool correctAnswer = quizBrain.getCorrectAnswer();
 
                 if (!correctAnswer) {
                   print('User was correct');
@@ -108,7 +103,7 @@ class _QuizPageState extends State<QuizPage> {
                 }
 
                 setState(() {
-                  questionNumber++;
+                  quizBrain.nextQuestion();
                 });
               },
               child: Text('False'),
