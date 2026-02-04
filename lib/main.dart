@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/quiz_brain.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 QuizBrain quizBrain = QuizBrain();
 
@@ -34,16 +35,54 @@ class _QuizPageState extends State<QuizPage> {
   @override
   List<Icon> scoreKeeper = [];
 
+  int correctAnswers = 0;
+
   void checkAnswer(bool userAnswer) {
     bool correctAnswer = quizBrain.getCorrectAnswer();
 
     setState(() {
-      if (!correctAnswer == userAnswer) {
-        scoreKeeper.add(Icon(Icons.check, color: Colors.green,));
-      } else {
-        scoreKeeper.add(Icon(Icons.close, color: Colors.red,));
+      if (quizBrain.isFinished()) {
+        Alert(
+          context: context,
+          type: AlertType.success,
+          title: "Quiz Completed",
+          desc: "You scored $correctAnswers out of ${scoreKeeper.length}.",
+          buttons: [
+            DialogButton(
+              child: Text(
+                "Reset",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () => {
+                setState(() {
+                  quizBrain.reset();
+                  scoreKeeper = [];
+                  correctAnswers = 0;
+                }),
+                Navigator.pop(context),
+              },
+              color: Color.fromRGBO(0, 179, 134, 1.0),
+            ),
+            DialogButton(
+              child: Text(
+                "Close",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () => Navigator.pop(context),
+              color: Colors.red,
+            ),
+          ],
+        ).show();
+
+        return;
       }
 
+      if (correctAnswer == userAnswer) {
+        scoreKeeper.add(Icon(Icons.check, color: Colors.green));
+        correctAnswers++;
+      } else {
+        scoreKeeper.add(Icon(Icons.close, color: Colors.red));
+      }
       quizBrain.nextQuestion();
     });
   }
@@ -99,7 +138,7 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                checkAnswer(false)
+                checkAnswer(false);
               },
               child: Text('False'),
             ),
